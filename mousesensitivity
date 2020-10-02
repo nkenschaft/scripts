@@ -1,0 +1,15 @@
+#!/bin/sh
+# Actually sets mouse sensitivity, not acceleration
+
+case "$1" in
+    set)
+        xinput set-prop "Logitech USB Receiver" "Coordinate Transformation Matrix" $2 0 0 0 $2 0 0 0 1
+    ;;
+    get)
+        xinput list-props $2  | grep "Coordinate Transformation Matrix" | grep -o $'\t[0-9]\.[1-9]*0' | grep -o "[0-9]*\.[0-9]*"
+    ;;
+    *)
+        echo "Please enter set or get as the first parameter"
+        exit 1
+    ;;
+esac

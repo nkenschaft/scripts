@@ -1,0 +1,11 @@
+#!/usr/bin/sh
+# dwm startup script
+
+while true; do
+    $HOME/scripts/dwmbar
+    sleep 1
+done &
+
+while true; do
+    dwm 2> ~/.dwm.log
+done

@@ -1,0 +1,4 @@
+#!/bin/sh
+# A script to return the percent filled on a partition
+
+df $1 | grep -o "[0-9]\+%"

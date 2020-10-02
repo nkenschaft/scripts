@@ -1,0 +1,30 @@
+#!/usr/bin/sh
+# dwm bar script
+
+MUTED=$(pactl list sinks | grep -A 6 "Name:.*Corsair" | tail -1 | grep -o "[a-z]*$")
+#$(pulsemixer --get-mute)
+case $MUTED in
+    no)
+        VOLICON="\uf485"
+    ;;
+    yes)
+        VOLICON="\uf466"
+    ;;
+    *)
+        VOLICON="?"
+    ;;
+esac
+VOL=$(pactl list sinks | grep -A 7 "Name:.*Corsair" | grep -o "[0-9]*%" | head -1)
+#$(pulsemixer --get-volume | grep -o "^[0-9]*")
+TIME=$(date "+%r")
+DATE=$(date "+%a, %b %d, %Y")
+#IP=$(for i in `ip r`; do echo $i; done | grep -A 1 src | tail -n1) # can get confused if you use vmware
+#NETWORK="\uf6ff"
+#TEMP="$(($(cat /sys/class/thermal/thermal_zone0/temp) / 1000))C"
+MEM=$($HOME/scripts/memusage)%
+CPU=$($HOME/scripts/cpuload)
+DISK1=$(df -lh | grep "/$" | awk "{print \$5}")
+DISK2=$(df -lh | grep "/data" | awk "{print \$5}")
+SEP="] ["
+STATUS=$(echo -e " [ \uf200 $MEM $SEP \uf080 $CPU $SEP \uf0a0 / $DISK1 /data $DISK2 $SEP $VOLICON $(percenttobar $VOL) $VOL $SEP \uf073 $DATE $SEP \uf017 $TIME ] ")
+xsetroot -name "$STATUS"

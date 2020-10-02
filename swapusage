@@ -1,0 +1,4 @@
+#!/bin/sh
+# A simple script to output swap usage as a percent
+
+free -m | grep Swap | awk '{print substr(($3/$2)*100,1,4)}' 

@@ -1,0 +1,4 @@
+#!/bin/sh
+# A simple script to return average cpu usage over the last minute
+
+awk '{print $1}' /proc/loadavg
